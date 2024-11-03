@@ -4,7 +4,7 @@ from fastapi.responses import StreamingResponse
 import cv2
 import numpy as np
 import io
-from Service.utilities.downloadImage import downloadImage
+from GrayGlacier.Service.downloadImage import downloadImage
 
 
 
@@ -34,19 +34,6 @@ async def upload_image(file: UploadFile = File(...)):
         return {"error": "Image conversion failed."}
 # --------------------------DOWNLOAD IMAGE-----------------------------------------------
     return downloadImage(buffer)
-
-    # # Create a BytesIO object to hold the image data
-    # img_byte_arr = io.BytesIO(buffer)
-
-    # # Set the filename for the downloaded image
-    # filename = "greyscale_image.png"
-
-    # # Return the greyscale image as a streaming response with headers to download
-    # return StreamingResponse(
-    #     img_byte_arr,
-    #     media_type="image/png",
-    #     headers={"Content-Disposition": f"attachment; filename={filename}"}
-    # )
 
 
 
