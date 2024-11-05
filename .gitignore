@@ -1,4 +1,8 @@
 Experimental
-GrayGlacier/__pycache__
-GrayGlacier/Service/utilities/__pycache__
+GrayGlacier/Service/example.txt
+GrayGlacier/Service/output_image.png
+
+*/__pycache__/
+*/*/__pycache__/
+
 venv
