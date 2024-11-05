@@ -4,8 +4,8 @@ from fastapi.responses import StreamingResponse
 import cv2
 import numpy as np
 import io
-from GrayGlacier.Service.downloadImage import downloadImage
-
+from Service.downloadImage import downloadImage
+from Service.FileBinerizer import file_to_image_API
 
 
 app = FastAPI()
@@ -36,6 +36,18 @@ async def upload_image(file: UploadFile = File(...)):
     return downloadImage(buffer)
 
 
+@app.post("/binerize/")
+async def upload_image(file: UploadFile = File(...)):
+    # Read the uploaded file and process it into an image buffer
+    buffer = await file_to_image_API(file)
+
+    # Return the greyscale image as a downloadable file without saving it to disk
+    return downloadImage(buffer, file.filename)
+
+
+
+
+
 
 
 from fastapi.responses import HTMLResponse
@@ -45,9 +57,9 @@ from fastapi.responses import HTMLResponse
 async def main():
     content = """
 <body>
-    <h1>Upload an Image</h1>
-    <form action="http://localhost:8000/upload/" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept="image/*" required>
+    <h1>Upload an Image to create a binary</h1>
+    <form action="http://localhost:8000/binerize/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
         <input type="submit" value="Upload">
     </form>
 </body>

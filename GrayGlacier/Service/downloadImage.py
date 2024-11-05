@@ -2,12 +2,13 @@ from fastapi.responses import StreamingResponse
 import io
 
 
-def downloadImage(imageBuffer):
+def downloadImage(imageBuffer, filename: str):
       # Create a BytesIO object to hold the image data
     img_byte_arr = io.BytesIO(imageBuffer)
 
     # Set the filename for the downloaded image
-    filename = "greyscale_image.png"
+    filename = filename.split(".")[0]
+    filename = str(filename) + "_binary_image.png"
 
     # Return the greyscale image as a streaming response with headers to download
     return StreamingResponse(
